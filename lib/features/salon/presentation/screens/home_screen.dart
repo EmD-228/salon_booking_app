@@ -25,8 +25,7 @@ class HomeScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(right: 6.0, top: 8.0),
               child: GestureDetector(
                 onTap: () {
-                  // TODO: Naviguer vers le profil quand il sera migré
-                  // context.push(RouteNames.profile);
+                  context.push(RouteNames.profile);
                 },
                 child: const Icon(
                   Icons.account_circle_sharp,

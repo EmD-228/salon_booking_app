@@ -160,9 +160,9 @@ class _Shop_owner_loginState extends State<Shop_owner_login> {
                   10,
                 )),
                 onPressed: () {
-                  if (_salonshopemail != null &&
-                      _salonshopnumber != null &&
-                      _saloshopid != null) {
+                  if (_salonshopemail.isNotEmpty &&
+                      _salonshopnumber.isNotEmpty &&
+                      _saloshopid.isNotEmpty) {
                     verifiy_owner();
                   }
                 },

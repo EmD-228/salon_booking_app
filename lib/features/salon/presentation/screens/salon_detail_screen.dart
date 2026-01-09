@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../providers/salon_providers.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../routes/route_names.dart';
 
 /// Écran affichant les détails d'un salon spécifique
 class SalonDetailScreen extends ConsumerStatefulWidget {
@@ -73,8 +74,10 @@ class _SalonDetailScreenState extends ConsumerState<SalonDetailScreen> {
                         selectedService = 'Haircut';
                       });
                       Navigator.pop(context);
-                      // TODO: Naviguer vers l'écran de sélection de créneaux horaires
-                      // context.push(RouteNames.timeSlotPath(widget.salonId));
+                      context.push(
+                        RouteNames.timeSlotPath(widget.salonId),
+                        extra: 'Haircut',
+                      );
                     },
                   ),
                   MaterialButton(
@@ -97,8 +100,10 @@ class _SalonDetailScreenState extends ConsumerState<SalonDetailScreen> {
                         selectedService = 'Beard';
                       });
                       Navigator.pop(context);
-                      // TODO: Naviguer vers l'écran de sélection de créneaux horaires
-                      // context.push(RouteNames.timeSlotPath(widget.salonId));
+                      context.push(
+                        RouteNames.timeSlotPath(widget.salonId),
+                        extra: 'Beard',
+                      );
                     },
                   ),
                 ],
@@ -139,8 +144,10 @@ class _SalonDetailScreenState extends ConsumerState<SalonDetailScreen> {
                       selectedService = 'Haircut & Beard';
                     });
                     Navigator.pop(context);
-                    // TODO: Naviguer vers l'écran de sélection de créneaux horaires
-                    // context.push(RouteNames.timeSlotPath(widget.salonId));
+                    context.push(
+                      RouteNames.timeSlotPath(widget.salonId),
+                      extra: 'Haircut & Beard',
+                    );
                   },
                 ),
               ),

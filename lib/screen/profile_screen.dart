@@ -1,23 +1,20 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-
-import 'package:salon_app/constants.dart';
-import 'dart:io';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:salon_app/constants.dart';
 import 'package:salon_app/screen/checkbooking.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../starting_screens/SpalshScreen.dart';
 
 File? user_image;
 var username = "";
 var email_profile;
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+  const Profile({super.key});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -27,9 +24,7 @@ class _ProfileState extends State<Profile> {
   Future<void> showbookedslot(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     var res = await http.post(Uri.parse(url_checkbooking), body: {
-      'email': prefs.getString('register') != null
-          ? prefs.getString('register')
-          : prefs.getString('Login')
+      'email': prefs.getString('register') ?? prefs.getString('Login')
     });
     var data = await jsonDecode(res.body);
 
@@ -108,7 +103,7 @@ class _ProfileState extends State<Profile> {
                       fontSize: 40.0),
                 ),
                 Text(
-                  username == null ? 'user' : username,
+                  username.isEmpty ? 'user' : username,
                   style:
                       GoogleFonts.ubuntu(fontSize: 20.0, color: Colors.white),
                 ),
@@ -179,7 +174,7 @@ class _ProfileState extends State<Profile> {
                 topRight: Radius.circular(30.0))),
         context: context,
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
             height: 100.0,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -197,17 +192,17 @@ class _ProfileState extends State<Profile> {
                     MaterialButton(
                         elevation: 30.0,
                         onPressed: () async {
-                          final ImagePicker _picker = ImagePicker();
-                          final photo = await _picker.pickImage(
+                          final ImagePicker picker = ImagePicker();
+                          final photo = await picker.pickImage(
                               source: ImageSource.camera);
 
-                          setState(() {
-                            if (File(photo!.path) != null) {
+                          if (photo != null) {
+                            setState(() {
                               user_image = File(photo.path);
+                            });
+                            if (user_image != null) {
+                              uploadimage(photo);
                             }
-                          });
-                          if (user_image != null) {
-                            uploadimage(photo);
                           }
                         },
                         child: const Icon(
@@ -218,18 +213,18 @@ class _ProfileState extends State<Profile> {
                     MaterialButton(
                         elevation: 30.0,
                         onPressed: () async {
-                          final ImagePicker _picker = ImagePicker();
-                          final photo = await _picker.pickImage(
+                          final ImagePicker picker = ImagePicker();
+                          final photo = await picker.pickImage(
                               source: ImageSource.gallery);
 
-                          setState(() {
-                            if (File(photo!.path) != null) {
+                          if (photo != null) {
+                            setState(() {
                               user_image = File(photo.path);
-                            }
-                          });
+                            });
 
-                          if (user_image != null || user_image != '') {
-                            uploadimage(photo);
+                            if (user_image != null) {
+                              uploadimage(photo);
+                            }
                           }
                         },
                         child: const Icon(
@@ -283,7 +278,7 @@ Future<void> uploadimage(var photo) async {
 //   });
 }
 
-getProfiledetail(BuildContext context) async {
+Future<void> getProfiledetail(BuildContext context) async {
   final prefs = await SharedPreferences.getInstance();
   if (prefs.getString('register') != null) {
     email_profile = prefs.getString('register');
@@ -299,14 +294,8 @@ getProfiledetail(BuildContext context) async {
 }
 
 Future<void> Logout(BuildContext context) async {
-  final prefs = await SharedPreferences.getInstance();
-
   SharedPreferences preferences = await SharedPreferences.getInstance();
   await preferences.clear();
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => Login(),
-    ),
-  );
+  // Naviguer vers l'écran de login (utiliser le nouveau LoginScreen)
+  Navigator.pushReplacementNamed(context, '/login');
 }

@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants.dart';
 
-late String _userUid;
+// late String _userUid; // Unused variable
 late var _OTP;
 
 var number = 10;
@@ -30,7 +30,6 @@ class _VerificationState extends State<Verification> {
   //  late User logInUser;
   //late String Username;
 
-  @override
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   void showInSnackBar(String value) {
     ScaffoldMessenger.of(context).showSnackBar(

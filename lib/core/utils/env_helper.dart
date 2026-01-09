@@ -17,7 +17,7 @@ class EnvHelper {
       ApiEndpoints.initialize(baseUrl);
     } catch (e) {
       // Si le fichier .env n'existe pas, utiliser les valeurs par défaut
-      print('Warning: .env file not found, using default values. Error: $e');
+      // Ignorer silencieusement et utiliser les valeurs par défaut
       ApiEndpoints.initialize(ApiEndpoints.baseUrl);
     }
   }

@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 
-next(BuildContext context) {
+
+void next(BuildContext context) {
   Future.delayed(Duration(seconds: 3), () {
    
     int count = 0;
@@ -18,7 +17,7 @@ next(BuildContext context) {
 }
 
 class Booked extends StatefulWidget {
-  const Booked({Key? key}) : super(key: key);
+  const Booked({super.key});
 
   @override
   State<Booked> createState() => _BookedState();

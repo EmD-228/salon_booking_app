@@ -8,7 +8,6 @@ import 'package:salon_app/screen/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../screen/bookscreen.dart';
-import 'package:salon_app/Home_page/locations.dart';
 
 class Home_Page_Screen extends StatefulWidget {
   const Home_Page_Screen({Key? key}) : super(key: key);

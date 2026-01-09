@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:salon_app/Home_page/locations.dart';
-import 'package:salon_app/Home_page/HomePage.dart';
 
 List<String> searchedTerms = [];
 String? placedsearch;

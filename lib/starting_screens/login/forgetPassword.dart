@@ -114,7 +114,7 @@ class _ForgetpasswordState extends State<Forgetpassword> {
                     side: const BorderSide(
                         width: 2.5, color: Color.fromARGB(255, 57, 255, 225))),
                 onPressed: () {
-                  if (email_fp != null) {
+                  if (email_fp.isNotEmpty) {
                     checkemail();
                    
                   }

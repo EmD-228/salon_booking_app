@@ -1,14 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/entities/user.dart';
-import '../../domain/usecases/login_usecase.dart';
-import '../../domain/usecases/register_usecase.dart';
-import '../../domain/usecases/logout_usecase.dart';
-import '../../domain/usecases/verify_email_usecase.dart';
-import '../../domain/usecases/send_otp_usecase.dart';
-import '../../domain/usecases/forgot_password_usecase.dart';
-import '../../domain/usecases/change_password_usecase.dart';
-import '../../domain/usecases/get_current_user_usecase.dart';
+
 import '../../data/providers/auth_data_providers.dart';
+import '../../domain/entities/user.dart';
+import '../../domain/usecases/change_password_usecase.dart';
+import '../../domain/usecases/forgot_password_usecase.dart';
+import '../../domain/usecases/get_current_user_usecase.dart';
+import '../../domain/usecases/login_usecase.dart';
+import '../../domain/usecases/logout_usecase.dart';
+import '../../domain/usecases/register_usecase.dart';
+import '../../domain/usecases/send_otp_usecase.dart';
+import '../../domain/usecases/verify_email_usecase.dart';
 
 /// Provider pour LoginUsecase
 final loginUsecaseProvider = FutureProvider<LoginUsecase>((ref) async {
@@ -63,11 +64,11 @@ final getCurrentUserUsecaseProvider =
 });
 
 /// Notifier principal pour l'authentification
-class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
-  final Ref ref;
-
-  AuthNotifier(this.ref) : super(const AsyncValue.loading()) {
+class AuthNotifier extends Notifier<AsyncValue<User?>> {
+  @override
+  AsyncValue<User?> build() {
     _initialize();
+    return const AsyncValue.loading();
   }
 
   Future<void> _initialize() async {
@@ -191,6 +192,6 @@ class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
 
 /// Provider pour AuthNotifier
 final authNotifierProvider =
-    StateNotifierProvider<AuthNotifier, AsyncValue<User?>>((ref) {
-  return AuthNotifier(ref);
+    NotifierProvider<AuthNotifier, AsyncValue<User?>>(() {
+  return AuthNotifier();
 });

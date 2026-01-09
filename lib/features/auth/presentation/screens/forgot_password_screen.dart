@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../providers/auth_providers.dart';
-import 'change_password_screen.dart';
 import '../../../../routes/route_names.dart';
 
 /// Écran de récupération de mot de passe
