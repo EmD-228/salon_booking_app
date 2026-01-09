@@ -1,4 +1,4 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
@@ -10,86 +10,87 @@ import '../../domain/usecases/change_password_usecase.dart';
 import '../../domain/usecases/get_current_user_usecase.dart';
 import '../../data/providers/auth_data_providers.dart';
 
-part 'auth_providers.g.dart';
-
 /// Provider pour LoginUsecase
-@riverpod
-Future<LoginUsecase> loginUsecase(LoginUsecaseRef ref) async {
+final loginUsecaseProvider = FutureProvider<LoginUsecase>((ref) async {
   final repository = await ref.watch(authRepositoryProvider.future);
   return LoginUsecase(repository);
-}
+});
 
 /// Provider pour RegisterUsecase
-@riverpod
-Future<RegisterUsecase> registerUsecase(RegisterUsecaseRef ref) async {
+final registerUsecaseProvider = FutureProvider<RegisterUsecase>((ref) async {
   final repository = await ref.watch(authRepositoryProvider.future);
   return RegisterUsecase(repository);
-}
+});
 
 /// Provider pour LogoutUsecase
-@riverpod
-Future<LogoutUsecase> logoutUsecase(LogoutUsecaseRef ref) async {
+final logoutUsecaseProvider = FutureProvider<LogoutUsecase>((ref) async {
   final repository = await ref.watch(authRepositoryProvider.future);
   return LogoutUsecase(repository);
-}
+});
 
 /// Provider pour VerifyEmailUsecase
-@riverpod
-Future<VerifyEmailUsecase> verifyEmailUsecase(VerifyEmailUsecaseRef ref) async {
+final verifyEmailUsecaseProvider =
+    FutureProvider<VerifyEmailUsecase>((ref) async {
   final repository = await ref.watch(authRepositoryProvider.future);
   return VerifyEmailUsecase(repository);
-}
+});
 
 /// Provider pour SendOtpUsecase
-@riverpod
-Future<SendOtpUsecase> sendOtpUsecase(SendOtpUsecaseRef ref) async {
+final sendOtpUsecaseProvider = FutureProvider<SendOtpUsecase>((ref) async {
   final repository = await ref.watch(authRepositoryProvider.future);
   return SendOtpUsecase(repository);
-}
+});
 
 /// Provider pour ForgotPasswordUsecase
-@riverpod
-Future<ForgotPasswordUsecase> forgotPasswordUsecase(
-    ForgotPasswordUsecaseRef ref) async {
+final forgotPasswordUsecaseProvider =
+    FutureProvider<ForgotPasswordUsecase>((ref) async {
   final repository = await ref.watch(authRepositoryProvider.future);
   return ForgotPasswordUsecase(repository);
-}
+});
 
 /// Provider pour ChangePasswordUsecase
-@riverpod
-Future<ChangePasswordUsecase> changePasswordUsecase(
-    ChangePasswordUsecaseRef ref) async {
+final changePasswordUsecaseProvider =
+    FutureProvider<ChangePasswordUsecase>((ref) async {
   final repository = await ref.watch(authRepositoryProvider.future);
   return ChangePasswordUsecase(repository);
-}
+});
 
 /// Provider pour GetCurrentUserUsecase
-@riverpod
-Future<GetCurrentUserUsecase> getCurrentUserUsecase(
-    GetCurrentUserUsecaseRef ref) async {
+final getCurrentUserUsecaseProvider =
+    FutureProvider<GetCurrentUserUsecase>((ref) async {
   final repository = await ref.watch(authRepositoryProvider.future);
   return GetCurrentUserUsecase(repository);
-}
+});
 
 /// Notifier principal pour l'authentification
-@riverpod
-class AuthNotifier extends _$AuthNotifier {
-  @override
-  Future<User?> build() async {
-    // Vérifier si un utilisateur est déjà connecté au démarrage
-    final getCurrentUserUsecase = await ref.read(getCurrentUserUsecaseProvider.future);
-    return await getCurrentUserUsecase();
+class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
+  final Ref ref;
+
+  AuthNotifier(this.ref) : super(const AsyncValue.loading()) {
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    try {
+      final getCurrentUserUsecase = await ref.read(getCurrentUserUsecaseProvider.future);
+      final user = await getCurrentUserUsecase();
+      state = AsyncValue.data(user);
+    } catch (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+    }
   }
 
   /// Connecte un utilisateur
   Future<void> login(String email, String password) async {
     state = const AsyncValue.loading();
-    
-    state = await AsyncValue.guard(() async {
+
+    try {
       final loginUsecase = await ref.read(loginUsecaseProvider.future);
       final user = await loginUsecase(email, password);
-      return user;
-    });
+      state = AsyncValue.data(user);
+    } catch (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+    }
   }
 
   /// Enregistre un nouvel utilisateur
@@ -100,8 +101,8 @@ class AuthNotifier extends _$AuthNotifier {
     required String password,
   }) async {
     state = const AsyncValue.loading();
-    
-    state = await AsyncValue.guard(() async {
+
+    try {
       final registerUsecase = await ref.read(registerUsecaseProvider.future);
       final user = await registerUsecase(
         email: email,
@@ -109,19 +110,23 @@ class AuthNotifier extends _$AuthNotifier {
         phoneNumber: phoneNumber,
         password: password,
       );
-      return user;
-    });
+      state = AsyncValue.data(user);
+    } catch (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+    }
   }
 
   /// Déconnecte l'utilisateur
   Future<void> logout() async {
     state = const AsyncValue.loading();
-    
-    state = await AsyncValue.guard(() async {
+
+    try {
       final logoutUsecase = await ref.read(logoutUsecaseProvider.future);
       await logoutUsecase();
-      return null; // Retourner null après déconnexion
-    });
+      state = const AsyncValue.data(null);
+    } catch (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+    }
   }
 
   /// Vérifie l'email avec OTP
@@ -174,10 +179,18 @@ class AuthNotifier extends _$AuthNotifier {
 
   /// Rafraîchit l'utilisateur actuel
   Future<void> refreshUser() async {
-    state = await AsyncValue.guard(() async {
+    try {
       final getCurrentUserUsecase = await ref.read(getCurrentUserUsecaseProvider.future);
-      return await getCurrentUserUsecase();
-    });
+      final user = await getCurrentUserUsecase();
+      state = AsyncValue.data(user);
+    } catch (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+    }
   }
 }
 
+/// Provider pour AuthNotifier
+final authNotifierProvider =
+    StateNotifierProvider<AuthNotifier, AsyncValue<User?>>((ref) {
+  return AuthNotifier(ref);
+});
