@@ -1,0 +1,289 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code / Cursor
+.vscode/
+.cursor/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.flutter-plugins
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# ============================================
+# FICHIERS SENSIBLES - NE JAMAIS COMMITTER
+# ============================================
+
+# Environment Variables - CRITIQUE
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+*.env
+
+# Secrets & Credentials
+secrets/
+credentials/
+*.pem
+*.key
+*.cert
+*.p12
+*.keystore
+*.jks
+
+# API Keys & Tokens
+api_keys.txt
+tokens.txt
+config/secrets.dart
+
+# ============================================
+# FICHIERS GÉNÉRÉS PAR CODE GENERATION
+# ============================================
+
+# Build Runner generated files
+*.g.dart
+*.freezed.dart
+*.config.dart
+*.mocks.dart
+
+# Riverpod generated
+*.g.dart
+
+# Freezed generated
+*.freezed.dart
+
+# JSON Serializable generated
+*.g.dart
+
+# Retrofit generated
+*.g.dart
+
+# ============================================
+# FICHIERS DE CACHE & TEMPORAIRES
+# ============================================
+
+# Flutter cache
+.flutter/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Dart cache
+.dart_tool/
+*.dart_tool/
+
+# Build cache
+build/
+*.build/
+
+# Coverage
+coverage/
+*.lcov
+*.coverage
+
+# Test coverage
+test/.test_coverage.dart
+
+# ============================================
+# FICHIERS DE LOGS
+# ============================================
+
+*.log
+logs/
+*.log.*
+
+# ============================================
+# FICHIERS DE CONFIGURATION LOCALE
+# ============================================
+
+# Local configuration files
+local.properties
+local_config.dart
+config/local.dart
+
+# Android local properties
+android/local.properties
+android/gradle.properties.local
+
+# iOS local configuration
+ios/Podfile.lock
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+
+# ============================================
+# FICHIERS DE BUILD PLATEFORME SPÉCIFIQUE
+# ============================================
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+android/.cxx/
+android/.idea/
+android/local.properties
+android/gradle-wrapper.jar
+android/gradlew
+android/gradlew.bat
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+*.app
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# macOS
+macos/Flutter/ephemeral/
+macos/Flutter/GeneratedPluginRegistrant.swift
+*.app
+
+# Windows
+windows/flutter/ephemeral/
+*.exe
+*.dll
+*.pdb
+
+# Linux
+linux/flutter/ephemeral/
+*.so
+
+# Web
+web/*.dart.js
+web/*.dart.js.map
+web/*.js_
+web/*.js.deps
+web/*.js.map
+
+# ============================================
+# FICHIERS DE DÉPENDANCES
+# ============================================
+
+# Node modules (si utilisé pour web)
+node_modules/
+package-lock.json
+yarn.lock
+
+# CocoaPods (iOS)
+Pods/
+Podfile.lock
+
+# ============================================
+# FICHIERS DE BACKUP & TEMPORAIRES
+# ============================================
+
+# Backup files
+*.bak
+*.backup
+*.old
+*~
+*.swp
+*.swo
+*.tmp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ============================================
+# FICHIERS DE DOCUMENTATION GÉNÉRÉE
+# ============================================
+
+# Generated documentation
+doc/api/
+docs/api/
+
+# ============================================
+# FICHIERS DE TEST
+# ============================================
+
+# Test files (optionnel - à décommenter si vous ne voulez pas commiter les tests)
+# test/**/*_test.dart
+
+# ============================================
+# FICHIERS SPÉCIFIQUES AU PROJET
+# ============================================
+
+# Fichiers de configuration personnelle
+.personal/
+my_config.dart
+
+# Fichiers de debug
+debug/
+*.debug
+
+# Fichiers de release
+release/
+*.release
+
+# ============================================
+# NOTES IMPORTANTES
+# ============================================
+# 
+# 1. Le fichier .env.example DOIT être commité (c'est un template)
+# 2. Les fichiers *.g.dart sont générés automatiquement par build_runner
+# 3. Ne jamais commiter les clés API, tokens, ou secrets
+# 4. Les fichiers de build sont régénérés à chaque compilation
+# 5. Les fichiers de cache peuvent être supprimés et régénérés
+#
+# Pour générer les fichiers .g.dart :
+# flutter pub run build_runner build --delete-conflicting-outputs
+#
+# ============================================

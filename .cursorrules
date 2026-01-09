@@ -1,0 +1,207 @@
+# Cursor Rules - Salon App Project
+
+## 🎯 RÈGLE PRINCIPALE - ANALYSE OBLIGATOIRE
+
+**AVANT TOUTE MODIFICATION OU CONTINUATION DE TÂCHE :**
+1. **TOUJOURS** analyser et résumer l'état actuel du projet
+2. Lire les fichiers clés pertinents (main.dart, constants.dart, pubspec.yaml)
+3. Consulter TODO_ARCHITECTURE.md pour connaître les tâches en cours
+4. Vérifier l'architecture actuelle avant de proposer des changements
+5. Identifier les dépendances et la structure existante
+
+**Cette règle est CRITIQUE pour éviter de se perdre dans le projet.**
+
+---
+
+## 📋 Contexte du Projet
+
+**Salon App** - Application Flutter de réservation de salons de coiffure
+
+### Architecture Actuelle (en migration)
+- **Ancienne** : Variables globales, setState partout, pas de gestion d'état centralisée
+- **Nouvelle** : Clean Architecture + Riverpod + GoRouter (en cours de migration)
+- **Référence** : Voir TODO_ARCHITECTURE.md pour la liste complète des tâches
+
+### Structure Actuelle
+```
+lib/
+├── constants.dart          # ⚠️ Variables globales à migrer
+├── main.dart
+├── Home_page/              # Interface client
+├── screen/                 # Écrans principaux
+├── starting_screens/       # Authentification
+└── shopowner/              # Interface propriétaire
+```
+
+### Structure Cible (Clean Architecture)
+```
+lib/
+├── core/                   # Infrastructure partagée
+├── features/               # Features modulaires (auth, salon, booking, etc.)
+├── shared/                 # Widgets/utilitaires partagés
+└── routes/                 # Navigation avec GoRouter
+```
+
+---
+
+## 🛠️ Stack Technique
+
+### Actuel
+- Flutter SDK: ^3.10.4
+- Gestion d'état: setState (à migrer vers Riverpod)
+- Navigation: Navigator.push (à migrer vers GoRouter)
+- HTTP: http package (à migrer vers Dio)
+
+### Cible
+- **Gestion d'état**: flutter_riverpod + riverpod_annotation
+- **Navigation**: go_router
+- **Network**: dio + retrofit
+- **Architecture**: Clean Architecture (Domain/Data/Presentation)
+- **Code Generation**: build_runner, freezed, json_serializable
+
+---
+
+## 📝 Règles de Développement
+
+### 1. Architecture
+- Suivre Clean Architecture : Domain → Data → Presentation
+- Chaque feature doit être indépendante et modulaire
+- Utiliser Riverpod pour la gestion d'état
+- Utiliser GoRouter pour la navigation
+- Éviter les variables globales (utiliser des providers)
+
+### 2. Code Quality
+- Toujours corriger les erreurs de linter
+- Supprimer le code mort et les imports non utilisés
+- Utiliser des noms de variables descriptifs
+- Commenter le code complexe
+- Suivre les conventions Dart/Flutter
+
+### 3. Sécurité
+- Ne jamais hardcoder les URLs API (utiliser .env)
+- Valider toutes les entrées utilisateur
+- Gérer correctement les erreurs réseau
+- Utiliser multipart/form-data pour l'upload d'images
+
+### 4. Tests
+- Créer des tests unitaires pour les usecases
+- Créer des tests pour les repositories
+- Tester les providers Riverpod
+
+### 5. Git & Versioning
+- Commits clairs et descriptifs
+- Une feature = une branche (si applicable)
+- Ne pas commiter les fichiers .env
+
+---
+
+## 🔍 Fichiers Importants à Consulter
+
+### Avant de commencer une tâche, lire :
+1. `TODO_ARCHITECTURE.md` - Liste complète des tâches de migration
+2. `ANALYSE_PROJET.md` - Analyse détaillée du projet
+3. `pubspec.yaml` - Dépendances actuelles
+4. `lib/constants.dart` - Variables globales (à migrer)
+5. `lib/main.dart` - Point d'entrée
+
+### Fichiers de référence pour l'architecture :
+- Structure cible dans TODO_ARCHITECTURE.md
+- Exemples d'implémentation dans ANALYSE_PROJET.md
+
+---
+
+## ⚠️ Points d'Attention
+
+### Problèmes Connus
+1. **Variables globales** dans constants.dart - À migrer vers des providers
+2. **Upload d'image** non sécurisé - À corriger avec multipart
+3. **Navigation** directe - À migrer vers GoRouter
+4. **Gestion d'erreurs** insuffisante - À améliorer
+5. **Code dupliqué** - À refactoriser
+
+### Erreurs de Linter
+- 15 erreurs identifiées (voir ANALYSE_PROJET.md)
+- Toujours corriger avant de commiter
+
+---
+
+## 🎯 Workflow Recommandé
+
+### Pour chaque nouvelle tâche :
+1. **Analyser** : Lire les fichiers pertinents et comprendre le contexte
+2. **Planifier** : Identifier les fichiers à modifier/créer
+3. **Implémenter** : Suivre l'architecture Clean Architecture
+4. **Tester** : Vérifier que ça fonctionne
+5. **Nettoyer** : Corriger les erreurs de linter
+6. **Documenter** : Mettre à jour les TODOs si nécessaire
+
+### Ordre de migration (priorité) :
+1. Setup & Configuration
+2. Feature Authentication
+3. Navigation
+4. Features métier (Salon, Booking, Profile, Owner)
+5. Cleanup & Tests
+
+---
+
+## 📚 Conventions de Nommage
+
+### Fichiers
+- **Screens** : `*_screen.dart` (ex: `login_screen.dart`)
+- **Widgets** : `*_widget.dart` (ex: `custom_button_widget.dart`)
+- **Providers** : `*_providers.dart` (ex: `auth_providers.dart`)
+- **Models** : `*_model.dart` (ex: `user_model.dart`)
+- **Entities** : `*.dart` (ex: `user.dart`)
+- **Repositories** : `*_repository.dart` ou `*_repository_impl.dart`
+- **Usecases** : `*_usecase.dart` (ex: `login_usecase.dart`)
+
+### Classes
+- **Screens** : `*Screen` (ex: `LoginScreen`)
+- **Widgets** : `*Widget` (ex: `CustomButtonWidget`)
+- **Providers** : `*Notifier` ou `*Provider` (ex: `AuthNotifier`)
+- **Models** : `*Model` (ex: `UserModel`)
+- **Entities** : Nom simple (ex: `User`)
+- **Repositories** : `*Repository` ou `*RepositoryImpl`
+- **Usecases** : `*Usecase` (ex: `LoginUsecase`)
+
+---
+
+## 🔄 Migration en Cours
+
+### État Actuel
+- Architecture ancienne avec variables globales
+- Migration vers Clean Architecture en cours
+- Suivre TODO_ARCHITECTURE.md pour la progression
+
+### À NE PAS FAIRE
+- ❌ Créer de nouvelles variables globales
+- ❌ Utiliser Navigator.push directement (utiliser GoRouter)
+- ❌ Utiliser setState dans les nouvelles features (utiliser Riverpod)
+- ❌ Hardcoder les URLs API
+- ❌ Ignorer les erreurs de linter
+
+### À FAIRE
+- ✅ Suivre Clean Architecture
+- ✅ Utiliser Riverpod pour l'état
+- ✅ Utiliser GoRouter pour la navigation
+- ✅ Utiliser .env pour les configurations
+- ✅ Créer des tests
+- ✅ Documenter le code
+
+---
+
+## 💡 Notes Importantes
+
+- Le projet est en **migration active** - certaines parties utilisent encore l'ancienne architecture
+- Toujours vérifier si une feature est déjà migrée avant de la modifier
+- Consulter TODO_ARCHITECTURE.md pour voir l'état d'avancement
+- En cas de doute, analyser d'abord avant d'agir
+
+---
+
+## 🚨 RAPPEL FINAL
+
+**TOUJOURS ANALYSER LE PROJET AVANT DE CONTINUER UNE TÂCHE**
+
+Cette règle est la plus importante pour maintenir la cohérence du projet pendant la migration.
+
