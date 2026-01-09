@@ -1,24 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:salon_app/Home_page/HomePage.dart';
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:salon_app/starting_screens/Login_page.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:salon_app/constants.dart';
 import 'dart:io';
 
-import '../intro.dart';
-import '../shopowner/customerpage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
+import 'package:salon_app/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../routes/route_names.dart';
 
 class Splash_Screen_Screen extends StatefulWidget {
+  const Splash_Screen_Screen({super.key});
+
   @override
   _Splash_Screen_ScreenState createState() => _Splash_Screen_ScreenState();
 }
 
 class _Splash_Screen_ScreenState extends State<Splash_Screen_Screen> {
-  @override
   Future<void> checkconnection() async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -36,8 +36,7 @@ class _Splash_Screen_ScreenState extends State<Splash_Screen_Screen> {
             print(e);
           }
 
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => Home_Page_Screen()));
+          context.go(RouteNames.home);
         } else if (prefs.getString('id') != null &&
             prefs.getString('email_owner') != null &&
             prefs.getString('num') != null) {
@@ -61,14 +60,12 @@ class _Splash_Screen_ScreenState extends State<Splash_Screen_Screen> {
               TodayBooking = data_2;
             });
 
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => customer()));
+            context.go(RouteNames.ownerDashboard);
           } catch (e) {
             print(e);
           }
         } else {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => App()));
+          context.go(RouteNames.userTypeSelection);
         }
       }
     } on SocketException catch (_) {
@@ -94,13 +91,6 @@ class _Splash_Screen_ScreenState extends State<Splash_Screen_Screen> {
               image: AssetImage("images/splash.png"), fit: BoxFit.cover)),
     );
     //  child: Image.asset('images/splash.png'));
-  }
-}
-
-class Login extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return LoginScreen();
   }
 }
 

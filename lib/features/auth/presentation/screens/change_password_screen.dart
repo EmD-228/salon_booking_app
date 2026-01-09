@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../providers/auth_providers.dart';
+import '../../../../routes/route_names.dart';
 
 /// Écran de changement de mot de passe
 class ChangePasswordScreen extends ConsumerStatefulWidget {
@@ -63,8 +65,8 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
             ),
           );
 
-          // Naviguer vers Home - sera géré par GoRouter
-          Navigator.of(context).pushReplacementNamed('/home');
+          // Naviguer vers Home avec GoRouter
+          context.go(RouteNames.home);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(

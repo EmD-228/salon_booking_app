@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../providers/auth_providers.dart';
 import '../../../../core/utils/error_handler.dart';
+import '../../../../routes/route_names.dart';
 
 /// Écran de connexion avec Riverpod
 class LoginScreen extends ConsumerStatefulWidget {
@@ -42,9 +44,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       next.whenOrNull(
         data: (user) {
           if (user != null) {
-            // Navigation vers Home - sera géré par GoRouter plus tard
-            // Pour l'instant, on garde la navigation classique
-            Navigator.of(context).pushReplacementNamed('/home');
+            // Navigation vers Home avec GoRouter
+            context.go(RouteNames.home);
           }
         },
         error: (error, stack) {
@@ -129,10 +130,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {
-                        // Navigation vers forgot password - sera géré par GoRouter
-                        Navigator.of(context).pushNamed('/forgot-password');
-                      },
+                    onPressed: () {
+                      // Navigation vers forgot password avec GoRouter
+                      context.push(RouteNames.forgotPassword);
+                    },
                       child: const Text(
                         'Forgot Password?',
                         style: TextStyle(fontSize: 16.0),

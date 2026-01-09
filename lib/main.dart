@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:salon_app/starting_screens/SpalshScreen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'core/utils/env_helper.dart';
+import 'app.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   
-  runApp(MaterialApp(debugShowCheckedModeBanner: false,home: Splash_Screen_Screen()));
+  // Charger les variables d'environnement
+  await EnvHelper.load();
+  
+  runApp(
+    const ProviderScope(
+      child: App(),
+    ),
+  );
 }

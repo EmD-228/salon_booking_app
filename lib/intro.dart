@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:salon_app/shopowner/Shopowner_login.dart';
-import 'package:salon_app/starting_screens/Login_page.dart';
+import 'routes/route_names.dart';
 
 
 class App extends StatelessWidget {
@@ -58,8 +58,7 @@ class App extends StatelessWidget {
                     color: Colors.transparent,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => LoginScreen()));
+                        context.push(RouteNames.login);
                       },
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(35, 10, 35, 10),
@@ -85,10 +84,7 @@ class App extends StatelessWidget {
                     color: Colors.transparent,
                     child: OutlinedButton(
                       onPressed: () {
- Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Shop_owner_login()));
-                        
-
+                        context.push(RouteNames.ownerLogin);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../providers/auth_providers.dart';
 import '../../../../core/utils/error_handler.dart';
+import '../../../../routes/route_names.dart';
 
 /// Écran de vérification d'email avec OTP
 class EmailVerifyScreen extends ConsumerStatefulWidget {
@@ -65,8 +67,8 @@ class _EmailVerifyScreenState extends ConsumerState<EmailVerifyScreen> {
         next.whenOrNull(
           data: (user) {
             if (user != null && mounted) {
-              // Navigation vers Home - sera géré par GoRouter
-              Navigator.of(context).pushReplacementNamed('/home');
+              // Navigation vers Home avec GoRouter
+              context.go(RouteNames.home);
             }
           },
           error: (error, stack) {

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../providers/auth_providers.dart';
 import 'email_verify_screen.dart';
+import '../../../../routes/route_names.dart';
 
 /// Écran d'inscription avec Riverpod
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -39,16 +41,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           .sendOtp(_emailController.text.trim());
 
       if (otpSent && mounted) {
-        // Naviguer vers l'écran de vérification
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => EmailVerifyScreen(
-              email: _emailController.text.trim(),
-              name: _nameController.text.trim(),
-              phoneNumber: _phoneController.text.trim(),
-              password: _passwordController.text,
-            ),
-          ),
+        // Naviguer vers l'écran de vérification avec GoRouter
+        context.push(
+          RouteNames.emailVerify,
+          extra: {
+            'email': _emailController.text.trim(),
+            'name': _nameController.text.trim(),
+            'phoneNumber': _phoneController.text.trim(),
+            'password': _passwordController.text,
+          },
         );
       } else if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
