@@ -7,12 +7,14 @@ import '../features/auth/presentation/screens/register_screen.dart';
 import '../features/auth/presentation/screens/email_verify_screen.dart';
 import '../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../features/auth/presentation/screens/change_password_screen.dart';
+import '../features/salon/presentation/screens/home_screen.dart';
+import '../features/salon/presentation/screens/salon_detail_screen.dart';
+import '../features/salon/presentation/screens/search_location_screen.dart';
 import 'route_names.dart';
 
 // Import temporaire des anciens écrans (seront migrés progressivement)
 import '../starting_screens/SpalshScreen.dart';
 import '../intro.dart';
-import '../Home_page/HomePage.dart';
 import '../shopowner/Shopowner_login.dart';
 import '../shopowner/customerpage.dart';
 
@@ -123,17 +125,24 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: RouteNames.home,
         name: 'home',
-        builder: (context, state) => const Home_Page_Screen(),
+        builder: (context, state) => const HomeScreen(),
       ),
-      // TODO: Ajouter les autres routes customer quand elles seront migrées
-      // GoRoute(
-      //   path: RouteNames.salonDetail,
-      //   name: 'salonDetail',
-      //   builder: (context, state) {
-      //     final salonId = int.parse(state.pathParameters['id']!);
-      //     return SalonDetailScreen(salonId: salonId);
-      //   },
-      // ),
+      GoRoute(
+        path: RouteNames.salonDetail,
+        name: 'salonDetail',
+        builder: (context, state) {
+          final salonId = int.parse(state.pathParameters['id']!);
+          return SalonDetailScreen(salonId: salonId);
+        },
+      ),
+      GoRoute(
+        path: RouteNames.searchLocation,
+        name: 'searchLocation',
+        builder: (context, state) {
+          final query = state.uri.queryParameters['q'] ?? '';
+          return SearchLocationScreen(searchQuery: query);
+        },
+      ),
 
       // Owner - Main Routes
       GoRoute(

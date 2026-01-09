@@ -20,6 +20,7 @@ class RouteNames {
   // Customer - Main
   static const String home = '/home';
   static const String salonDetail = '/salon/:id';
+  static const String searchLocation = '/search-location';
   static const String timeSlot = '/salon/:id/time-slot';
   static const String bookingConfirmation = '/booking/confirmation';
   static const String bookingsList = '/bookings';
