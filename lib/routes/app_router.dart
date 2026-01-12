@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../core/screens/splash_screen.dart';
+import '../core/screens/user_type_selection_screen.dart';
 import '../features/auth/presentation/providers/auth_providers.dart';
 import '../features/auth/presentation/screens/change_password_screen.dart';
 import '../features/auth/presentation/screens/email_verify_screen.dart';
@@ -17,9 +19,6 @@ import '../features/profile/presentation/screens/profile_screen.dart';
 import '../features/salon/presentation/screens/home_screen.dart';
 import '../features/salon/presentation/screens/salon_detail_screen.dart';
 import '../features/salon/presentation/screens/search_location_screen.dart';
-import '../intro.dart';
-// Import temporaire des anciens écrans (seront migrés progressivement)
-import '../starting_screens/SpalshScreen.dart';
 import 'route_names.dart';
 
 /// Provider pour le router de l'application
@@ -70,14 +69,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: RouteNames.splash,
         name: 'splash',
-        builder: (context, state) => Splash_Screen_Screen(),
+        builder: (context, state) => const SplashScreen(),
       ),
 
       // User Type Selection
       GoRoute(
         path: RouteNames.userTypeSelection,
         name: 'userTypeSelection',
-        builder: (context, state) => const App(),
+        builder: (context, state) => const UserTypeSelectionScreen(),
       ),
 
       // Auth - Customer Routes
